@@ -1,14 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import socket
 import os
 
 app = FastAPI()
 
 @app.get("/")
-def home():
+def home(request: Request):
     return {
         "message": "FastAPI running 🚀",
-        "container": socket.gethostname(),
-        "port": os.getenv("PORT", "unknown"),
-        "server_name": os.getenv("SERVER_NAME", "unknown")
+        "container_id": socket.gethostname(),
+        "server_name": os.getenv("SERVER_NAME", "unknown"),
+        "client_ip": request.client.host
     }
